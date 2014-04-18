@@ -25,6 +25,7 @@ function auto_move(){
 		var score = GM.score;
 		while (true) {
 			GM.move(2);
+			GM.move(1);
 			if (score == GM.score) {
 				break;
 			}
@@ -34,6 +35,7 @@ function auto_move(){
 		if (moves == 0) {
 			while (true) {
 				GM.move(0);
+				GM.move(1);
 				if (score == GM.score) {
 					break;
 				}
