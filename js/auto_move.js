@@ -10,8 +10,45 @@ function start_auto_move(){
 function auto_move(){
 	if ( auto_move_flag === false )
 		return;
-	var direction = Math.floor( Math.random() * 4 );
-	GM.move( direction );
+	// 0: up, 1: right, 2:down, 3: left
+	var score = GM.score
+	var moves = 0;
+	for (;;) {
+		var score = GM.score
+		GM.move(1);
+		if (score == GM.score) {
+			break;
+		}
+		moves = moves + 1;
+	}
+	if (moves == 0) {
+		var score = GM.score;
+		while (true) {
+			GM.move(2);
+			if (score == GM.score) {
+				break;
+			}
+			score = GM.score;
+			moves = moves + 1;
+		}
+		if (moves == 0) {
+			while (true) {
+				GM.move(0);
+				if (score == GM.score) {
+					break;
+				}
+				score = GM.score;
+				moves = moves + 1;
+			}
+			if (moves == 0) {
+				GM.move(3);
+			}
+		}
+	}
+	if (GM.over || GM.won) {
+		stop_auto_move();
+		return;
+	}
 	setTimeout( "auto_move()", auto_move_time );
 }
 
