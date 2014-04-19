@@ -30,12 +30,10 @@ function auto_move(){
 				GM.move(3);
 		}
 	}
-	if (GM.won) {
+	if (GM.won || GM.over) {
 		stop_auto_move();
 		return;
 	}
-	if (GM.over)
-		GM.restart();
 	setTimeout( "auto_move()", auto_move_time );
 }
 
