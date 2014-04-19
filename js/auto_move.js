@@ -16,41 +16,26 @@ function auto_move(){
 	for (;;) {
 		var score = GM.score
 		GM.move(1);
-		if (score == GM.score) {
+		if (score == GM.score)
 			break;
-		}
 		moves = moves + 1;
 	}
 	if (moves == 0) {
 		var score = GM.score;
-		while (true) {
-			GM.move(2);
-			GM.move(1);
-			if (score == GM.score) {
-				break;
-			}
-			score = GM.score;
-			moves = moves + 1;
-		}
-		if (moves == 0) {
-			while (true) {
-				GM.move(0);
-				GM.move(1);
-				if (score == GM.score) {
-					break;
-				}
-				score = GM.score;
-				moves = moves + 1;
-			}
-			if (moves == 0) {
+
+		GM.move(2);
+		if (score == GM.score) {
+			GM.move(0);
+			if (score == GM.score)
 				GM.move(3);
-			}
 		}
 	}
-	if (GM.over || GM.won) {
+	if (GM.won) {
 		stop_auto_move();
 		return;
 	}
+	if (GM.over)
+		GM.restart();
 	setTimeout( "auto_move()", auto_move_time );
 }
 
