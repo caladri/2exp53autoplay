@@ -24,8 +24,11 @@ function auto_move(){
 		var score = GM.score;
 
 		GM.move(2);
+		GM.move(1);
 		if (score == GM.score) {
 			GM.move(0);
+			GM.move(1);
+			GM.move(2);
 			if (score == GM.score)
 				GM.move(3);
 		}
