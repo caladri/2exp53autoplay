@@ -30,6 +30,7 @@ GameManager.prototype.setup = function () {
       this.grid  = new Grid(data.grid);
 
       this.score = data.score;
+      this.highTile = data.highTile;
       this.over  = data.over;
 
       this.actuate();
@@ -44,6 +45,7 @@ GameManager.prototype.setup = function () {
     });
 
     this.score        = 0;
+    this.highTile     = 0;
     this.over         = false;
     this.won          = false;
 
@@ -77,18 +79,23 @@ GameManager.prototype.actuate = function () {
   if (this.scoreManager.get() < this.score) {
     this.scoreManager.set(this.score);
   }
+  if (this.scoreManager.get_tile() < this.highTile) {
+    this.scoreManager.set_tile(this.highTile);
+  }
 
   this.actuator.actuate(this.grid, {
     score:     this.score,
     over:      this.over,
     won:       this.won,
-    bestScore: this.scoreManager.get()
+    bestScore: this.scoreManager.get(),
+    highTile:  this.scoreManager.get_tile()
   });
 
   //Store each time
   this.storeMove({
     grid:  this.grid,
     score: this.score,
+    highTile: this.highTile,
     over:  this.over
   });
 };
@@ -151,6 +158,10 @@ GameManager.prototype.move = function (direction) {
         if (next && next.value === tile.value && !next.mergedFrom) {
           var merged = new Tile(positions.next, tile.value * 2);
           merged.mergedFrom = [tile, next];
+
+          if (merged.value > self.highTile) {
+            self.highTile = merged.value;
+          }
 
           self.grid.insertTile(merged);
           self.grid.removeTile(tile);

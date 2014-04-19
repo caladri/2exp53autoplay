@@ -22,6 +22,7 @@ function LocalScoreManager() {
   var localSupported = !!window.localStorage;
 
   this.key     = "bestScore_9007199254740992";
+  this.tileKey = "tile_900719925470992";
   this.storage = localSupported ? window.localStorage : window.fakeStorage;
 }
 
@@ -31,5 +32,13 @@ LocalScoreManager.prototype.get = function () {
 
 LocalScoreManager.prototype.set = function (score) {
   this.storage.setItem(this.key, score);
+};
+
+LocalScoreManager.prototype.get_tile = function () {
+  return this.storage.getItem(this.tileKey) || 0;
+};
+
+LocalScoreManager.prototype.set_tile = function (tile) {
+  this.storage.setItem(this.tileKey, tile);
 };
 
